@@ -8,7 +8,7 @@
 #include <hal/hal.h>
 #include <SPI.h>
 #include <SSD1306.h>
-
+#define hal_init LMICHAL_init
 #define LEDPIN 2
 
 #define OLED_I2C_ADDR 0x3C
@@ -26,17 +26,17 @@ SSD1306 display (OLED_I2C_ADDR, OLED_SDA, OLED_SCL);
 // the bytes.
 
 // Copy the value from Device EUI from the TTN console in LSB mode.
-static const u1_t PROGMEM DEVEUI[8]= { ... };
+static const u1_t PROGMEM DEVEUI[8]= { 0x0F, 0x8B, 0x05, 0xD0, 0x7E, 0xD5, 0xB3, 0x70 };
 void os_getDevEui (u1_t* buf) { memcpy_P(buf, DEVEUI, 8);}
 
 // Copy the value from Application EUI from the TTN console in LSB mode
-static const u1_t PROGMEM APPEUI[8]= { ... };
+static const u1_t PROGMEM APPEUI[8]= { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 void os_getArtEui (u1_t* buf) { memcpy_P(buf, APPEUI, 8);}
 
 // This key should be in big endian format (or, since it is not really a
 // number but a block of memory, endianness does not really apply). In
 // practice, a key taken from ttnctl can be copied as-is. Anyway its in MSB mode.
-static const u1_t PROGMEM APPKEY[16] = { ... };
+static const u1_t PROGMEM APPKEY[16] = { 0x92, 0xA6, 0xA6, 0xD1, 0x52, 0x05, 0x09, 0x46, 0xEB, 0xB5, 0xC2, 0x70, 0x51, 0xF1, 0x0B, 0xE3 };
 void os_getDevKey (u1_t* buf) { memcpy_P(buf, APPKEY, 16);}
 
 static osjob_t sendjob;
